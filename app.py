@@ -164,6 +164,15 @@ st.markdown("""
         padding: 15px;
         border-radius: 4px;
         margin: 10px 0;
+        color: #1b5e20;
+    }
+    .success-box h4 {
+        color: #1b5e20;
+        margin: 0 0 10px 0;
+    }
+    .success-box p {
+        color: #2e7d32;
+        margin: 0;
     }
     
     /* Error Box Styling */
@@ -173,6 +182,15 @@ st.markdown("""
         padding: 15px;
         border-radius: 4px;
         margin: 10px 0;
+        color: #b71c1c;
+    }
+    .error-box h4 {
+        color: #b71c1c;
+        margin: 0 0 10px 0;
+    }
+    .error-box p {
+        color: #c62828;
+        margin: 0;
     }
 </style>
 """, unsafe_allow_html=True)
