@@ -1,0 +1,93 @@
+# ================================================================
+#  Credit Scoring & Creditworthiness Prediction System
+#  config/config.yaml  —  Central configuration
+# ================================================================
+
+project:
+  name: "Credit Scoring & Creditworthiness Prediction System"
+  version: "1.0"
+  author: "Code Alpha Internship"
+
+data:
+  raw_path: "data/credit_data.csv"
+  processed_path: "data/processed_data.csv"
+  random_seed: 42
+  test_size: 0.20
+  use_smote: true
+  smote_k_neighbors: 5
+
+features:
+  target: "loan_status"
+
+  numeric:
+    - person_age
+    - person_income
+    - person_emp_length
+    - loan_amnt
+    - loan_int_rate
+    - loan_percent_income
+    - cb_person_cred_hist_length
+
+  categorical:
+    - person_home_ownership
+    - loan_intent
+    - loan_grade
+    - cb_person_default_on_file
+
+  # Engineered financial risk indicators
+  engineered:
+    - debt_to_income_ratio
+    - loan_to_income_ratio
+    - income_per_cred_year
+    - high_risk_grade_flag
+    - int_rate_x_loan_amnt
+    - employment_stability_score
+
+models:
+  logistic_regression:
+    max_iter: 1000
+    C: 1.0
+    solver: lbfgs
+    class_weight: balanced
+
+  decision_tree:
+    max_depth: 8
+    min_samples_split: 20
+    min_samples_leaf: 10
+    criterion: gini
+    class_weight: balanced
+
+  random_forest:
+    n_estimators: 300
+    max_depth: 10
+    min_samples_split: 10
+    min_samples_leaf: 5
+    class_weight: balanced
+    n_jobs: -1
+
+  xgboost:
+    n_estimators: 300
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    scale_pos_weight: 3.58      # ratio of neg/pos class
+    eval_metric: logloss
+
+tuning:
+  enabled: true
+  n_trials: 40
+  timeout: 180
+  target_model: xgboost        # tune the best model
+
+evaluation:
+  cv_folds: 5
+  scoring: f1
+  threshold: 0.50
+
+outputs:
+  figures_dir: "outputs/figures"
+  shap_dir: "outputs/shap"
+  reports_dir: "outputs/reports"
+  models_dir: "outputs/models"
+  metrics_csv: "outputs/reports/model_metrics.csv"
