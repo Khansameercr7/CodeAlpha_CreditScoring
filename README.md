@@ -1,29 +1,39 @@
-# Credit Scoring & Creditworthiness Prediction System
+# Credit Scoring & Loan Default Prediction
 
-A machine learning solution for predicting loan default risk and assessing creditworthiness of loan applicants. Built with scikit-learn, XGBoost, and Streamlit for real-time predictions with SHAP model explainability.
+I built a credit risk prediction system that classifies loan applicants as likely to default or not. It uses scikit-learn, XGBoost, and Streamlit with SHAP explainability to show why the model makes its decisions.
 
-## Project Overview
+## What This Project Does
 
-This system predicts which loan applicants are likely to default, helping lenders make data-driven decisions on loan approvals, interest rates, and risk mitigation. The project demonstrates end-to-end ML pipeline development with production-ready code architecture.
+Basically, I trained machine learning models on ~32K loan records to predict which applicants will default. The tricky part was getting the models to actually explain their predictions—not just give yes/no answers. That's where SHAP came in. I also built a simple web dashboard so someone could paste in applicant details and see predictions in real-time.
 
-**Key Capabilities:**
-- Real-time credit risk prediction with probability scores
-- Comparison of 4 ML classifiers (Logistic Regression, Decision Tree, Random Forest, XGBoost)
-- 6 engineered financial risk features based on domain expertise
-- SHAP explainability for transparent AI decisions
-- Interactive Streamlit dashboard for live predictions
-- Industry-standard evaluation metrics (ROC-AUC, PR-AUC, F1-Score)
-- Comprehensive cross-validation and performance benchmarking
+**What I Actually Built:**
+- 4 different models (Logistic Regression, Decision Tree, Random Forest, XGBoost) and compared them
+- Custom financial features (debt-to-income ratio, payment history, credit utilization)
+- A Streamlit web app where you can enter applicant info and get a live prediction
+- SHAP visualizations that show which factors pushed the prediction up or down
+- Proper model evaluation with ROC curves, precision-recall, and cross-validation
+- Handled imbalanced data with SMOTE since defaults are rare
+
+## What I Learned Building This
+
+1. **Binary Classification** - Predicting defaults is a classification problem; I learned how to frame it, evaluate it properly, and handle class imbalance
+2. **Feature Engineering** - Not all features matter equally. I crafted financial metrics that actually make sense to loan officers
+3. **Model Comparison** - Tried 4 different algorithms and tuned them with Optuna to find the best performer
+4. **Model Explainability** - SHAP really changed how I think about ML. Now I can show exactly which features matter for each prediction
+5. **Production Code** - Learned to organize code into modules (data/, models/, evaluation/), use config files instead of hardcoding, and write tests
+6. **Imbalanced Data** - Defaults are rare, so SMOTE was essential to avoid training a model that just predicts "no default" all the time
+7. **Data Cleaning** - Outliers, missing values, encoding—it all takes time but quality preprocessing makes models better
+8. **Building UIs** - Streamlit made it surprisingly easy to build a web app so non-technical people could use the model
 
 ## Project Structure
 
 ```
 credit_scoring/
 │
-├── 📄 main.py                          ← Run full pipeline
-├── 📄 app.py                           ← Streamlit dashboard
-├── 📄 requirements.txt
-├── 📄 README.md
+├── main.py                          ← Run full pipeline
+├── app.py                           ← Streamlit dashboard
+├── requirements.txt
+├── README.md
 │
 ├── config/
 │   └── config.yaml                     ← All settings (no magic numbers)
@@ -62,7 +72,7 @@ credit_scoring/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 1. Install dependencies
@@ -80,7 +90,7 @@ python -m pytest tests/ -v
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 | Field | Value |
 |---|---|
@@ -93,7 +103,7 @@ python -m pytest tests/ -v
 
 ---
 
-## 🔧 Feature Engineering
+## Feature Engineering
 
 | Feature | Formula | Why |
 |---|---|---|
@@ -106,44 +116,44 @@ python -m pytest tests/ -v
 
 ---
 
-## 🤖 Models
+## Models
 
 | Model | How it works |
 |---|---|
 | **Logistic Regression** | Sigmoid boundary on linear feature combination |
 | **Decision Tree** | Recursive Gini splits → human-readable rules |
 | **Random Forest** | 300 trees, bagging + feature randomness, majority vote |
-| **XGBoost ⭐** | Sequential gradient boosting, corrects residual errors |
+| **XGBoost** | Sequential gradient boosting, corrects residual errors |
 
 ---
 
-## 📈 Results
+## Results
 
 | Model | Accuracy | Precision | Recall | F1 | ROC-AUC | PR-AUC |
 |---|---|---|---|---|---|---|
 | Logistic Regression | 0.879 | 0.782 | 0.606 | 0.683 | 0.880 | 0.754 |
 | Decision Tree | 0.919 | 0.900 | 0.703 | 0.789 | 0.908 | 0.844 |
 | Random Forest | 0.925 | 0.896 | 0.739 | 0.810 | 0.920 | 0.870 |
-| **XGBoost** ⭐ | **0.888** | 0.711 | **0.810** | 0.758 | **0.937** | **0.887** |
+| **XGBoost** | **0.888** | 0.711 | **0.810** | 0.758 | **0.937** | **0.887** |
 
-**Best model: XGBoost** — ROC-AUC = 0.937 (industry target ≥ 0.75 ✅)
+**Best model: XGBoost** — ROC-AUC = 0.937 (industry target ≥ 0.75)
 
 ---
 
-## 🖥️ Streamlit Dashboard Pages
+## Streamlit Dashboard Pages
 
 | Page | Description |
 |---|---|
-| 🏠 Overview | System summary, pipeline steps, feature explanations |
-| 🔮 Risk Predictor | Live applicant assessment with probability gauge |
-| 📊 Model Performance | Comparison table, metric deep-dive, FP/FN analysis |
-| 📈 Charts & Figures | All 12 visualisation figures |
-| 🔍 SHAP Explainability | Summary, bar, and waterfall SHAP plots |
-| 📋 Dataset Explorer | Raw data, statistics, interactive distributions |
+| Overview | System summary, pipeline steps, feature explanations |
+| Risk Predictor | Live applicant assessment with probability gauge |
+| Model Performance | Comparison table, metric deep-dive, FP/FN analysis |
+| Charts & Figures | All 12 visualisation figures |
+| SHAP Explainability | Summary, bar, and waterfall SHAP plots |
+| Dataset Explorer | Raw data, statistics, interactive distributions |
 
 ---
 
-## 🧪 Tests
+## Tests
 
 ```bash
 python -m pytest tests/ -v
@@ -161,7 +171,7 @@ Test coverage:
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 All hyperparameters and paths live in `config/config.yaml`.
 No magic numbers in source code.
@@ -176,14 +186,14 @@ evaluation.threshold: 0.50    # decision boundary
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
 `Python 3.9+` · `scikit-learn` · `XGBoost` · `imbalanced-learn` · `SHAP`
 `pandas` · `numpy` · `matplotlib` · `seaborn` · `Streamlit` · `Optuna` · `joblib`
 
 ---
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - Real-time credit scoring REST API (FastAPI)
 - Deep Learning risk analysis (TabNet)
